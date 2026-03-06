@@ -1,1 +1,366 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>１年のまとめ（行事ラジオ／思い出／来年度の目標／日付）</title>
 
+<style>
+  :root{
+    --bg:#fafafa;
+    --panel:#fff;
+    --border:#ccc;
+    --soft:#ddd;
+    --text:#222;
+    --muted:#888;
+    --accent:#2463eb;
+  }
+  body{
+    font-family:"UD デジタル 教科書体 N-R","Hiragino Sans","Noto Sans JP",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+  }
+  .sheet{
+    max-width:900px;
+    margin:20px auto;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:20px;
+  }
+  h1{margin-top:0}
+  .step{
+    border:1px solid var(--soft);
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:15px;
+  }
+  input[type=text], textarea{
+    width:100%;
+    font-size:16px;
+    padding:8px;
+    border-radius:8px;
+    border:1px solid #bbb;
+    box-sizing:border-box;
+  }
+  textarea{min-height:100px}
+  .row{display:flex; gap:8px; align-items:center; flex-wrap:wrap;}
+  .row .grow{flex:1 1 300px;}
+  .help{font-size:13px; color:var(--muted);}
+  .example{color:var(--muted); font-size:14px; margin:4px 0 8px;}
+  .counter{text-align:right; font-size:12px; color:var(--muted); margin-top:4px;}
+  .btn{
+    padding:8px 12px; font-size:14px; border-radius:8px; border:1px solid #aaa;
+    background:#f5f5f5; cursor:pointer; margin:4px 6px 4px 0;
+  }
+  .btn.primary{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .btn.ghost{background:transparent;}
+  .pill{
+    display:inline-block; padding:3px 10px; border:1px solid var(--soft);
+    border-radius:999px; font-size:12px; color:#555; background:#f8f8f8;
+  }
+
+  /* ラジオグループ */
+  .radio-group{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:8px;}
+  .radio-group label{
+    display:flex; align-items:center; gap:6px; padding:8px 10px;
+    border:1px solid var(--soft); border-radius:8px; cursor:pointer; background:#fff;
+  }
+
+  ruby rt{font-size:0.55em;}
+
+  /* 清書（縦書き） */
+  #result{
+    min-height:520px;
+    writing-mode:vertical-rl;
+    text-orientation:upright;
+    line-height:2;
+    font-size:20px;
+    letter-spacing:4px;
+    border:1px solid #bbb;
+    border-radius:10px;
+    padding:16px;
+    white-space:pre-wrap; /* 改行保持 */
+    background:#fff;
+  }
+
+  @media print{
+    .btn, .help, .counter, .pill, .example{display:none !important;}
+    body{background:#fff;}
+    .sheet{border:none; padding:0; margin:0;}
+    .step{border:none; padding:0; margin:0 0 12mm;}
+    #result{
+      font-size:22pt; line-height:2.1; border:none; padding:0; letter-spacing:4px;
+    }
+    @page{
+      size:A4 portrait;
+      margin:18mm 18mm 18mm 18mm;
+    }
+  }
+</style>
+</head>
+
+<body>
+<div class="sheet">
+
+  <h1>
+    <ruby>１年<rt>いちねん</rt></ruby>のまとめ
+    <span class="pill">①ラジオ選択 / 入力欄は漢字OK</span>
+  </h1>
+
+  <!-- 1. 行事（ラジオ＋「その他」で入力可） -->
+  <div class="step">
+    <h2>① <ruby>行事<rt>ぎょうじ</rt></ruby></h2>
+
+    <div class="radio-group" id="eventRadios" role="radiogroup" aria-label="行事の選択">
+      <label><input type="radio" name="event" value="入学式">
+        <ruby>入学式<rt>にゅうがくしき</rt></ruby>
+      </label>
+      <label><input type="radio" name="event" value="体育祭">
+        <ruby>体育祭<rt>たいいくさい</rt></ruby>
+      </label>
+      <label><input type="radio" name="event" value="校内実習">
+        <ruby>校内実習<rt>こうないじっしゅう</rt></ruby>
+      </label>
+      <label><input type="radio" name="event" value="移動教室">
+        <ruby>移動教室<rt>いどうきょうしつ</rt></ruby>
+      </label>
+      <label><input type="radio" name="event" value="文化祭">
+        <ruby>文化祭<rt>ぶんかさい</rt></ruby>
+      </label>
+      <label><input type="radio" name="event" value="持久走記録会">
+        <ruby>持久走<rt>じきゅうそう</rt></ruby><ruby>記録会<rt>きろくかい</rt></ruby>
+      </label>
+      <label><input type="radio" name="event" value="生徒会選挙">
+        <ruby>生徒会<rt>せいとかい</rt></ruby><ruby>選挙<rt>せんきょ</rt></ruby>
+      </label>
+      <label><input type="radio" name="event" value="３年生を送る会">
+        <ruby>３年生<rt>さんねんせい</rt></ruby>を<ruby>送<rt>おく</rt></ruby>る<ruby>会<rt>かい</rt></ruby>
+      </label>
+      <label><input type="radio" name="event" value="その他">
+        <ruby>その他<rt>そのた</rt></ruby>（じぶんで 入力）
+      </label>
+    </div>
+
+    <div class="row" style="margin-top:8px;">
+      <input type="text" id="eventCustom" class="grow" placeholder="例：学校 お楽しみ会／地域交流会 など（自由記入・漢字OK）" disabled aria-disabled="true">
+    </div>
+    <div id="eventHelp" class="help"></div>
+  </div>
+
+  <!-- 2. その行事で一番の思い出（自由入力・漢字OK／例ボタン複数・上書き） -->
+  <div class="step">
+    <h2>② その <ruby>行事<rt>ぎょうじ</rt></ruby>で <ruby>一番<rt>いちばん</rt></ruby>の <ruby>思い出<rt>おもいで</rt></ruby></h2>
+    <div class="example">例を押すとそのまま入ります（重複しません：毎回上書き）。</div>
+    <div class="row" style="margin-bottom:6px;">
+      <button class="btn ghost" data-insert="#memory" data-template="みんなでちからをあわせてやりとげたことが、いちばんこころにのこりました">例１</button>
+      <button class="btn ghost" data-insert="#memory" data-template="どきどきしたけれど、はっぴょうがうまくいってほっとしました">例２</button>
+      <button class="btn ghost" data-insert="#memory" data-template="ともだちにおうえんしてもらって、さいごまでがんばれました">例３</button>
+      <span class="counter" id="memoryCounter">0 文字</span>
+    </div>
+    <textarea id="memory" placeholder="一番の思い出を 自分の言葉で書いてみよう（漢字OK）。"></textarea>
+  </div>
+
+  <!-- 3. 来年度の目標（自由入力・漢字OK／例ボタン複数・上書き） -->
+  <div class="step">
+    <h2>③ <ruby>来年度<rt>らいねんど</rt></ruby>の <ruby>目標<rt>もくひょう</rt></ruby></h2>
+    <div class="row" style="margin-bottom:6px;">
+      <button class="btn ghost" data-insert="#goal" data-template="いまよりもじょうずにできるようになりたいです">例１</button>
+      <button class="btn ghost" data-insert="#goal" data-template="もっとれんしゅうして、うまくなりたいです">例２</button>
+      <button class="btn ghost" data-insert="#goal" data-template="らいねんどもがんばりたいです">例３</button>
+      <span class="counter" id="goalCounter">0 文字</span>
+    </div>
+    <textarea id="goal" placeholder="来年度の目標を 自分の言葉で書いてみよう（漢字OK）。"></textarea>
+  </div>
+
+  <!-- 4. 日付 -->
+  <div class="step">
+    <h2>④ <ruby>日付<rt>ひづけ</rt></ruby></h2>
+    <div class="row">
+      <input type="text" id="date" class="grow" placeholder="例：2026年3月6日">
+      <button class="btn" id="todayBtn">きょうの <ruby>日付<rt>ひづけ</rt></ruby>を入れる</button>
+    </div>
+    <div class="help">※ 清書のいちばん下に出ます。</div>
+  </div>
+
+  <!-- 清書 -->
+  <div class="step">
+    <h2><ruby>清書<rt>せいしょ</rt></ruby>（たてがき）</h2>
+    <!-- 「まとめる」ボタンはありません（自動更新） -->
+    <button class="btn" id="pdfBtn">PDFにする</button>
+    <div id="warn" class="help" aria-live="polite" style="margin-top:6px;"></div>
+    <div id="result" role="textbox" aria-readonly="true"></div>
+  </div>
+
+</div>
+
+<script>
+  /* === ① 既定行事のふりがな辞書（清書で使用） === */
+  const EVENT_RUBY = {
+    '入学式': '<ruby>入学式<rt>にゅうがくしき</rt></ruby>',
+    '体育祭': '<ruby>体育祭<rt>たいいくさい</rt></ruby>',
+    '校内実習': '<ruby>校内実習<rt>こうないじっしゅう</rt></ruby>',
+    '移動教室': '<ruby>移動教室<rt>いどうきょうしつ</rt></ruby>',
+    '文化祭': '<ruby>文化祭<rt>ぶんかさい</rt></ruby>',
+    '持久走記録会': '<ruby>持久走<rt>じきゅうそう</rt></ruby><ruby>記録会<rt>きろくかい</rt></ruby>',
+    '生徒会選挙': '<ruby>生徒会<rt>せいとかい</rt></ruby><ruby>選挙<rt>せんきょ</rt></ruby>',
+    '３年生を送る会': '<ruby>３年生<rt>さんねんせい</rt></ruby>を<ruby>送<rt>おく</rt></ruby>る<ruby>会<rt>かい</rt></ruby>'
+  };
+
+  /* === 要素参照 === */
+  const el = {
+    radios: document.querySelectorAll('input[name="event"]'),
+    eventCustom: document.getElementById('eventCustom'),
+    eventHelp: document.getElementById('eventHelp'),
+
+    memory: document.getElementById('memory'),
+    goal: document.getElementById('goal'),
+
+    date: document.getElementById('date'),
+    result: document.getElementById('result'),
+    warn: document.getElementById('warn'),
+    todayBtn: document.getElementById('todayBtn'),
+    pdfBtn: document.getElementById('pdfBtn'),
+
+    memoryCounter: document.getElementById('memoryCounter'),
+    goalCounter: document.getElementById('goalCounter')
+  };
+
+  /* === 文字数カウンター === */
+  function updateCounter(text, counterEl){
+    counterEl.textContent = (text.trim().length) + ' 文字';
+  }
+  el.memory.addEventListener('input', ()=>{
+    updateCounter(el.memory.value, el.memoryCounter);
+    build();
+  });
+  el.goal.addEventListener('input', ()=>{
+    updateCounter(el.goal.value, el.goalCounter);
+    build();
+  });
+
+  /* === ①：ラジオ挙動（「その他」のときだけ入力可） === */
+  el.radios.forEach(r=>{
+    r.addEventListener('change', ()=>{
+      if(r.value === 'その他'){
+        el.eventCustom.disabled = false;
+        el.eventCustom.setAttribute('aria-disabled','false');
+        el.eventCustom.placeholder = '行事名を入力（漢字OK／自由記入）';
+        el.eventCustom.focus();
+      }else{
+        el.eventCustom.disabled = true;
+        el.eventCustom.setAttribute('aria-disabled','true');
+        el.eventCustom.value = '';
+        el.eventHelp.textContent = '';
+      }
+      build(); // 行事変更で清書更新
+    });
+  });
+
+  // ①：その他の自由入力（漢字OK）
+  el.eventCustom.addEventListener('input', build);
+
+  /* === 例文ボタン：毎回「上書き」して重複なし === */
+  document.querySelectorAll('button[data-insert]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const target = document.querySelector(btn.dataset.insert);
+      const tpl = btn.dataset.template || '';
+      if(!target) return;
+      target.value = tpl;           // 上書き
+      target.dispatchEvent(new Event('input')); // カウンター＆build更新
+      target.focus();
+    });
+  });
+
+  /* === 文末に「。」を補う === */
+  function ensurePeriod(text){
+    if(!text) return '';
+    const t = text.trim();
+    const end = t.slice(-1);
+    return ['。','！','？','!','?'].includes(end) ? t : (t + '。');
+  }
+
+  /* === XSS対策：ユーザー入力はエスケープして出力（ruby辞書はHTML許可） === */
+  function escapeHTML(s){
+    return s.replace(/&/g,'&amp;')
+            .replace(/</g,'&lt;')
+            .replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;')
+            .replace(/'/g,'&#39;');
+  }
+
+  /* === 今日（西暦） === */
+  function todayStr(){
+    const d = new Date();
+    const y = d.getFullYear(), m = d.getMonth()+1, day = d.getDate();
+    return `${y}年${m}月${day}日`;
+  }
+  el.todayBtn.addEventListener('click', ()=>{
+    el.date.value = todayStr();
+    build();
+  });
+
+  /* === 清書（縦書き、ruby有効化のためinnerHTML） === */
+  function build(){
+    el.warn.textContent = '';
+
+    // 選択された行事
+    const checked = Array.from(el.radios).find(x=>x.checked);
+    const selectedVal = checked ? checked.value : '';
+    const customRaw = el.eventCustom.value; // 自由入力（漢字OK）
+
+    const memory = el.memory.value;
+    const goal   = el.goal.value;
+    const date   = el.date.value.trim();
+
+    let parts = [];
+
+    // 1 行事：常に「私の一番の思い出は　◯◯　です。」
+    let eventDisplay = '　　'; // 未選択時は全角スペース（空欄表示）
+    if (selectedVal === 'その他' && customRaw.trim()) {
+      eventDisplay = escapeHTML(customRaw);
+    } else if (selectedVal && selectedVal !== 'その他') {
+      eventDisplay = EVENT_RUBY[selectedVal] || escapeHTML(selectedVal);
+    }
+    parts.push(ensurePeriod(`私の一番の思い出は　${eventDisplay}　です`));
+
+    // 2 思い出（ユーザー入力はエスケープ）
+    parts.push(memory.trim()
+      ? ensurePeriod(escapeHTML(memory))
+      : '（いちばんの <ruby>思い出<rt>おもいで</rt></ruby>を かきましょう）');
+
+    // 3 目標（ユーザー入力はエスケープ）
+    parts.push(goal.trim()
+      ? ensurePeriod(escapeHTML(goal))
+      : '（<ruby>来年度<rt>らいねんど</rt></ruby>の <ruby>目標<rt>もくひょう</rt></ruby>を かきましょう）');
+
+    // 4 日付
+    parts.push(date ? escapeHTML(date) : '（<ruby>日付<rt>ひづけ</rt></ruby>を いれましょう）');
+
+    el.result.innerHTML = parts.join('\n\n');
+
+    // 注意表示（未入力チェック）
+    if( (!selectedVal) || (selectedVal==='その他' && !customRaw.trim()) || !memory.trim() || !goal.trim() || !date ){
+      el.warn.innerHTML = '※ 空いているところを うめると、もっと すてきな まとめに なります。';
+    }
+  }
+
+  /* === PDFにする === */
+  function makePDF(){
+    build();            // 最新の清書を反映
+    window.print();     // ブラウザの印刷ダイアログ
+  }
+  el.pdfBtn.addEventListener('click', makePDF);
+
+  // 初期表示
+  (function init(){
+    el.date.value = todayStr();
+    updateCounter('', el.memoryCounter);
+    updateCounter('', el.goalCounter);
+    build(); // 初回清書
+  })();
+</script>
+
+</body>
+</html>
